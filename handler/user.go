@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"testBW/helper"
 	"testBW/users"
@@ -33,6 +34,8 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, helper.ApiResponse("Failed register", http.StatusBadRequest, "Failed", nil))
 		return
 	}
+
+	fmt.Println("uhuy")
 
 	newFormat := users.UserFormatter(newUser)
 
