@@ -21,12 +21,12 @@ func main() {
 
 	userRepo := users.NewRepo(db)
 	userService := users.NewService(userRepo)
-
 	userHandler := handler.NewUserHandler(userService)
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
 
+	api.GET("/user", userHandler.Login)
 	api.POST("/user", userHandler.RegisterUser)
 
 	router.Run()

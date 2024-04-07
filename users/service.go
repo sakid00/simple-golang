@@ -1,7 +1,10 @@
 package users
 
+import "errors"
+
 type Service interface {
 	RegisterUser(input RegisterUserInput) (User, error)
+	LoginUser(input LoginIniput) (User, error)
 }
 
 type service struct {
@@ -23,4 +26,17 @@ func (s *service) RegisterUser(input RegisterUserInput) (User, error) {
 	}
 
 	return newUser, nil
+}
+
+func (s *service) LoginUser(input LoginIniput) (User, error) {
+	userLogin, err := s.repo.FindEmail(input.Email)
+	if err != nil {
+		return userLogin, err
+	}
+
+	if userLogin.Id == 0 {
+		return userLogin, errors.New("user not found")
+	}
+
+	return userLogin, nil
 }
